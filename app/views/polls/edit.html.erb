@@ -1,0 +1,57 @@
+<h1>Create new poll</h1>
+
+<%= form_for @poll do |f| %>
+
+  <% if @poll.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@poll.errors.count, "error") %> prohibited this article from being saved:
+      </h2>
+      <ul>
+        <% @poll.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><%= f.text_field :title %>
+  </p>
+
+  <div id="options">
+
+    <p>
+      <% count = 1 %>
+      <% @poll.poll.each do |key, value| %>
+        <div id="option<%= count %>">
+          <h4>Option <%= count %></h4>
+          <input type="textbox" name="options[<%= count %>]" value="<%= value[0] %>">
+          <% if count > 1 %>
+            <br><button type='button' name='button' onclick='$("#option<%= count %>").remove()'>Remove this option</button></div>
+          <% end %>
+          <% count += 1 %>
+        </div>
+      <% end %>
+    </p>
+  </div>
+
+  <br>
+  <button type="button" name="button" onclick="add()">Add new option</button>
+
+  <script type="text/javascript">
+    id = <%= count %>;
+    function add() {
+      var html = "<div id='option" + id + "'>";
+      html += "<h4>Option " + id + "</h4>";
+      html += "<input type='textbox' name='options[" + id + "]'>";
+      html += "<br><button type='button' name='button' onclick='$(\"#option" + id + "\").remove()'>Remove this option</button></div>"
+      $("#options").append(html);
+      id++;
+    }
+  </script>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

@@ -1,0 +1,16 @@
+<h1>VoteRB!</h1>
+<%= link_to 'Create new Poll', new_poll_path %>
+<br>
+
+<table>
+  <tr>
+    <th>Poll Name</th>
+  </tr>
+  <% @polls.each do |poll| %>
+    <tr>
+      <td><%= link_to poll.title, poll_path(poll) %></td>
+      <td><%= link_to "Edit Poll", edit_poll_path(poll) %></td>
+      <td><%= link_to "Delete Poll", poll_path(poll), method: :delete, data: { confirm: "Are you sure you want to delete this poll?" } %></td>
+    </tr>
+  <% end %>
+</table>

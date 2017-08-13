@@ -1,0 +1,47 @@
+<h1>Create new poll</h1>
+
+<%= form_for @poll do |f| %>
+
+  <% if @poll.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@poll.errors.count, "error") %> prohibited this article from being saved:
+      </h2>
+      <ul>
+        <% @poll.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><%= f.text_field :title %>
+  </p>
+
+  <div id="options">
+    <div id="option1">
+      <h4>Option 1</h4>
+      <input type="textbox" name="options[1]">
+    </div>
+  </div>
+
+  <br>
+  <button type="button" name="button" onclick="add()">Add new option</button>
+
+  <script type="text/javascript">
+    id = 2;
+    function add() {
+      var html = "<div id='option" + id + "'>";
+      html += "<h4>Option " + id + "</h4>";
+      html += "<input type='textbox' name='options[" + id + "]'>";
+      html += "<br><button type='button' name='button' onclick='$(\"#option" + id + "\").remove()'>Remove this option</button></div>"
+      $("#options").append(html);
+      id++;
+    }
+  </script>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
