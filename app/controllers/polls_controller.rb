@@ -14,6 +14,13 @@ class PollsController < ApplicationController
 
   def show
     @poll = Poll.find(params[:id])
+    @total = 0
+    @poll.poll.each do |key, poll|
+      @total += poll[1]
+    end
+    if @total == 0
+      @total = 1
+    end
   end
 
   def vote
@@ -44,7 +51,8 @@ class PollsController < ApplicationController
 
   def update
     @poll = Poll.find(params[:id])
-    if (@poll.update(poll_params))
+    update_params = poll_params
+    if (@poll.update(update_params))
       redirect_to @poll
     else
       render 'edit'
@@ -56,10 +64,18 @@ class PollsController < ApplicationController
       poll = Hash.new
       i = 0
       params["options"].each do |key, item|
-
-        poll[i] = [item, 0]
+        votes = 0
+        if @poll
+          @poll.poll.each do |key, val|
+            if item == val[0]
+              votes = val[1]
+            end
+          end
+        end
+        poll[i] = [item, votes]
         i+=1
       end
+
       params.require(:poll).permit(:title).merge(poll: poll)
     end
 

@@ -1,11 +1,20 @@
+<div class="jumbotron center">
+  <h2>Voting on <%= @poll.title %> </h2>
+</div>
+
 <%= form_for @poll, :url => {:action => 'submit'} do |f| %>
-  <h1>Voting on <%= @poll.title %> </h1>
+  <div class="form-group">
+    <legend>Options</legend>
+    <% @poll.poll.each do |key, value| %>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="option" id="optionsRadios<%= key %>" value="<%= key %>">
+          <%= value[0] %>
+        </label>
+      </div>
+    <% end %>
+  </div>
 
-  <% @poll.poll.each do |key, value| %>
-  <input type="radio" name="option" value="<%= key %>"><%= value[0] %></input><br>
-  <% end %>
+  <%= f.submit "Cast Vote", :class => "btn btn-success btn-block" %>
 
-  <p>
-    <%= f.submit %>
-  </p>
 <% end %>

@@ -1,0 +1,71 @@
+<%= form_for(@poll, :html => {:class => "form-horizontal"}) do |f| %>
+
+  <% if @poll.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@poll.errors.count, "error") %> prohibited this article from being saved:
+      </h2>
+      <ul>
+        <% @poll.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group">
+    <%= f.label :title, :class => "col-md-2 control-label" %>
+    <div class="col-md-10">
+      <%= f.text_field :title, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div id="options">
+
+  </div>
+
+  <br>
+
+
+  <div class="col-md-6">
+    <button class="btn btn-block btn-info" type="button" name="button" onclick="add()">Add new option</button>
+  </div>
+  <div class="col-md-6">
+    <%= f.submit :class => "btn btn-block btn-success" %>
+  </div>
+
+  <script type="text/javascript">
+
+    var id;
+
+    $(document).ready(function() {
+      id = 0;
+      <% if (@poll.poll) %>
+        <% @poll.poll.each do |key, value| %>
+          addOption("<%= value[0] %>");
+        <% end %>
+      <% else %>
+        add();
+      <% end %>
+    });
+
+    function add() {
+      addOption("");
+    }
+
+    function addOption(val) {
+      var html = "<div class='form-group' id='" + id + "'>";
+      html += "<label for '" + id + "-input' class='col-md-2 control-label'>Option " + (id+1) + "</label>"
+      html += "<div class='col-md-" + (id > 0 ? "8" : "10") + "'>";
+      html += "<input type='text' class='form-control' id='" + id + "-input' name='options[" + id + "]' value='" + val + "'>";
+      html += "</div>"; // Class col-md-8/10
+      if (id > 0) {
+        html += "<div class='col-md-2'><button class='btn btn-danger' type='button' name='button' onclick='$(\"#" + id + "\").remove()'>Delete option</button></div>";
+      }
+      html += "</div>"; // Class form-group
+      $("#options").append(html);
+      id++;
+    }
+  </script>
+<% end %>
