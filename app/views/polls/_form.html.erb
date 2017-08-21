@@ -15,10 +15,8 @@
 
 
   <div class="form-group">
-    <%= f.label :title, :class => "col-md-2 control-label" %>
-    <div class="col-md-10">
-      <%= f.text_field :title, :class => "form-control" %>
-    </div>
+    <%= f.label :title, :class => "control-label" %>
+    <%= f.text_field :title, :class => "form-control" %>
   </div>
 
   <div id="options">
@@ -28,12 +26,8 @@
   <br>
 
 
-  <div class="col-md-6">
-    <button class="btn btn-block btn-info" type="button" name="button" onclick="add()">Add new option</button>
-  </div>
-  <div class="col-md-6">
-    <%= f.submit :class => "btn btn-block btn-success" %>
-  </div>
+  <button class="btn btn-block btn-info" type="button" name="button" onclick="add()">Add new option</button>
+  <%= f.submit :class => "btn btn-block btn-success" %>
 
   <script type="text/javascript">
 
@@ -56,13 +50,11 @@
 
     function addOption(val) {
       var html = "<div class='form-group' id='" + id + "'>";
-      html += "<label for '" + id + "-input' class='col-md-2 control-label'>Option " + (id+1) + "</label>"
-      html += "<div class='col-md-" + (id > 0 ? "8" : "10") + "'>";
-      html += "<input type='text' class='form-control' id='" + id + "-input' name='options[" + id + "]' value='" + val + "'>";
-      html += "</div>"; // Class col-md-8/10
+      html += "<label style='float: left; margin-top: 3px; margin-bottom: 7px' for '" + id + "-input'control-label'>Option " + (id+1) + "</label>"
       if (id > 0) {
-        html += "<div class='col-md-2'><button class='btn btn-danger' type='button' name='button' onclick='$(\"#" + id + "\").remove()'>Delete option</button></div>";
+        html += "<div style='float: left; margin-bottom: 10px; margin-left: 10px'><button class='btn btn-sm btn-danger' type='button' name='button' onclick='$(\"#" + id + "\").remove()'>Delete option</button></div>";
       }
+      html += "<input type='text' class='form-control' id='" + id + "-input' name='options[" + id + "]' value='" + val + "'>";
       html += "</div>"; // Class form-group
       $("#options").append(html);
       id++;

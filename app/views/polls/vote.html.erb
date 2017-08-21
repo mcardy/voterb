@@ -2,7 +2,7 @@
   <h2>Voting on <%= @poll.title %> </h2>
 </div>
 
-<% if !(defined?(params['error'])).nil? %>
+<% if (params["error"] == "1") %>
   <div class="alert alert-danger">You have already voted on this poll!</div>
 <% end %>
 
@@ -19,6 +19,13 @@
     <% end %>
   </div>
 
-  <%= f.submit "Cast Vote", :class => "btn btn-success btn-block" %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.submit "Cast Vote", :class => "btn btn-success btn-block" %>
+    </div>
+    <div class="col-md-6">
+      <%= link_to "Back to Poll", @poll, :class => "btn btn-primary btn-block" %>
+    </div>
+  </div>
 
 <% end %>
