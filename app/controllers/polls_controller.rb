@@ -35,8 +35,7 @@ class PollsController < ApplicationController
       @poll.save
       redirect_to @poll
     else
-      @voteerror = "You have already voted on this poll!"
-      render 'vote'
+      redirect_to vote_poll_path(@poll, error: '1')
     end
   end
 

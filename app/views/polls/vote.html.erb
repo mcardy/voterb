@@ -2,8 +2,8 @@
   <h2>Voting on <%= @poll.title %> </h2>
 </div>
 
-<% if !(defined?(@voteerror)).nil? %>
-  <div class="alert alert-danger"><%= @voteerror %></div>
+<% if !(defined?(params['error'])).nil? %>
+  <div class="alert alert-danger">You have already voted on this poll!</div>
 <% end %>
 
 <%= form_for @poll, :url => {:action => 'submit'} do |f| %>
