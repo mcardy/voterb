@@ -2,6 +2,10 @@
   <h2>Voting on <%= @poll.title %> </h2>
 </div>
 
+<% if !(defined?(@voteerror)).nil? %>
+  <div class="alert alert-danger"><%= @voteerror %></div>
+<% end %>
+
 <%= form_for @poll, :url => {:action => 'submit'} do |f| %>
   <div class="form-group">
     <legend>Options</legend>

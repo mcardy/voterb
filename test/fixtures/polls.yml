@@ -3,7 +3,9 @@
 one:
   title: MyString
   poll: MyText
+  voted: MyText
 
 two:
   title: MyString
   poll: MyText
+  voted: MyText

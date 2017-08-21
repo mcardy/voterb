@@ -29,9 +29,15 @@ class PollsController < ApplicationController
 
   def submit
     @poll = Poll.find(params[:id])
-    @poll.poll[params["option"].to_i][1] = @poll.poll[params["option"].to_i][1] + 1
-    @poll.save
-    redirect_to @poll
+    if (!@poll.voted.include? request.remote_ip)
+      @poll.poll[params["option"].to_i][1] = @poll.poll[params["option"].to_i][1] + 1
+      @poll.voted.push(request.remote_ip)
+      @poll.save
+      redirect_to @poll
+    else
+      @voteerror = "You have already voted on this poll!"
+      render 'vote'
+    end
   end
 
   def create
@@ -76,7 +82,7 @@ class PollsController < ApplicationController
         i+=1
       end
 
-      params.require(:poll).permit(:title).merge(poll: poll)
+      params.require(:poll).permit(:title).merge(poll: poll).merge(voted: Array.new)
     end
 
 end
